@@ -28,6 +28,12 @@ def expand_recent_bins():
 
 @app.endpoint('views.home')
 def home():
+    try:
+        db.lookup_bin("callback")
+    except KeyError:
+        db.create_bin(False, "callback")
+        print("created callback bin")
+        update_recent_bins("callback")
     return render_template('home.html', recent=expand_recent_bins())
 
 
@@ -35,7 +41,9 @@ def home():
 def bin(name):
     try:
         bin = db.lookup_bin(name)
+        print('GOT BIN {}'.format(bin))
     except KeyError:
+        print("BIN NOT FOUND")
         return "Not found\n", 404
     if request.query_string == 'inspect':
         if bin.private and session.get(bin.name) != bin.secret_key:

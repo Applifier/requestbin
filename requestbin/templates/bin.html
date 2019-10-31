@@ -20,7 +20,7 @@
           <div class="row-fluid">
             <div class="span4">
               {{base_url}}<br>
-              <span class="method">{{request.method}}</span> 
+              <span class="method">{{request.method}}</span>
               <span class="absolute-path">{{request.path}}</span><span class="querystring">{{request.query_string|to_qs}}</span>
             </div>
             <div class="span6 content">
@@ -140,7 +140,7 @@ public class RequestBinTutorial {
       <div class="alert-message block-message info">
         <h4>Limits</h4>
         <p>This {% if bin.private %}<strong>private</strong>{% endif %}
-        bin will keep the last 20 requests made to it and remain available for 48 hours after it was created.
+        bin will keep the last {{bin.max_requests}} requests made to it and remain {% if bin.ttl > 0 %} available for {{bin.ttl}} hours after it was created{% else %}forever{% endif %}.
         However, data might be cleared at any time, so <strong>treat bins as highly ephemeral</strong>.</p>
 
         <h4>Need more?</h4>
@@ -168,7 +168,7 @@ public class RequestBinTutorial {
             {% else %}
               <p class="keypair"><strong>{{k}}:</strong> {{v}}</p>
             {% endif %}
-          {% endfor %} 
+          {% endfor %}
         {% endif %}
       </div>
       <div class="span8">

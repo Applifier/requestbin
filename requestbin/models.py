@@ -16,22 +16,24 @@ from requestbin import config
 class Bin(object):
     max_requests = config.MAX_REQUESTS
 
-    def __init__(self, private=False):
+    def __init__(self, private=False, name=None):
         self.created = time.time()
         self.private = private
         self.color = random_color()
-        self.name = tinyid(8)
+        self.name = name
+        if not name:
+            self.name = tinyid(8)
         self.favicon_uri = solid16x16gif_datauri(*self.color)
         self.requests = []
         self.secret_key = os.urandom(24) if self.private else None
 
     def json(self):
         return json.dumps(self.to_dict())
-    
+
     def to_dict(self):
         return dict(
-            private=self.private, 
-            color=self.color, 
+            private=self.private,
+            color=self.color,
             name=self.name,
             request_count=self.request_count)
 
@@ -61,7 +63,7 @@ class Bin(object):
 
 class Request(object):
     ignore_headers = config.IGNORE_HEADERS
-    max_raw_size = config.MAX_RAW_SIZE 
+    max_raw_size = config.MAX_RAW_SIZE
 
     def __init__(self, input=None):
         if input:
@@ -88,7 +90,7 @@ class Request(object):
             self.content_length = len(self.raw)
 
             # for header in self.ignore_headers:
-            #     self.raw = re.sub(r'{}: [^\n]+\n'.format(header), 
+            #     self.raw = re.sub(r'{}: [^\n]+\n'.format(header),
             #                         '', self.raw, flags=re.IGNORECASE)
             if self.raw and len(self.raw) > self.max_raw_size:
                 self.raw = self.raw[0:self.max_raw_size]

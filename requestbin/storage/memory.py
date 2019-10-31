@@ -14,7 +14,8 @@ class MemoryStorage():
         self.request_count = 0
 
     def do_start(self):
-        self.spawn(self._cleanup_loop)
+        if self.cleanup_interval > 0:
+            self.spawn(self._cleanup_loop)
 
     def _cleanup_loop(self):
         while True:
@@ -27,8 +28,9 @@ class MemoryStorage():
             if bin.created < expiry:
                 self.bins.pop(name)
 
-    def create_bin(self, private=False):
-        bin = Bin(private)
+    def create_bin(self, private=False, name=None):
+        bin = Bin(private, name)
+        bin.ttl = self.bin_ttl
         self.bins[bin.name] = bin
         return self.bins[bin.name]
 
