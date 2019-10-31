@@ -1,0 +1,48 @@
+namespace: ads
+productgroup: cpi-direct
+
+enableService: true
+enableDeployment: true
+
+deployment:
+  image:
+    repository: gcr.io/unity-ads-common-prd/requestbin
+    tag: master
+
+  replicas: 1
+
+  nodeSelector:
+    kind: standard-pool
+
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8000"
+    prometheus.io/path: "/metrics"
+
+  tolerations:
+    - key: "machine_type"
+      operator: "Equal"
+      value: "standard"
+      effect: "NoSchedule"
+
+  resources:
+    requests:
+      cpu: 1
+      memory: 100Mi
+    noLimits: true
+
+  livenessProbe:
+    port: 8000
+    path: /
+
+  readinessProbe:
+    port: 8000
+    path: /
+
+service:
+  type: ClusterIP
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8000
