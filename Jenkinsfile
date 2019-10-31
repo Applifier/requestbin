@@ -1,4 +1,4 @@
 Script{
-    deploy = "kubernetes"
+    deploy = "helm"
     deploy_prod = "false"
 }
