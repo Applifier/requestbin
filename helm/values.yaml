@@ -33,13 +33,13 @@ deployment:
     httpGet:
       path: /
       port: 8000
-      scheme: https
+      scheme: HTTPS
 
   readinessProbe:
     httpGet:
       path: /
       port: 8000
-      scheme: https
+      scheme: HTTPS
 
   ports:
     - containerPort: 8000
