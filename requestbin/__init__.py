@@ -78,6 +78,7 @@ app.add_url_rule('/api/v1/bins/<bin>/requests', 'api.requests', methods=['GET'])
 app.add_url_rule('/api/v1/bins/<bin>/requests/<name>', 'api.request', methods=['GET'])
 
 app.add_url_rule('/api/v1/stats', 'api.stats')
+app.add_url_rule('/ready', 'api.ready')
 
 # app.add_url_rule('/robots.txt', redirect_to=url_for('static', filename='robots.txt'))
 

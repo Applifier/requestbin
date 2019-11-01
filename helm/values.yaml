@@ -31,13 +31,13 @@ deployment:
 
   livenessProbe:
     httpGet:
-      path: /
+      path: /ready
       port: 8000
       scheme: HTTPS
 
   readinessProbe:
     httpGet:
-      path: /
+      path: /ready
       port: 8000
       scheme: HTTPS
 
@@ -49,7 +49,7 @@ enableService: true
 service:
   type: ClusterIP
   ports:
-    - name: http
+    - name: requestbin-https
       protocol: TCP
-      port: 80
+      port: 443
       targetPort: 8000

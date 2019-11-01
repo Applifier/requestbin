@@ -68,3 +68,8 @@ def stats():
     resp = make_response(json.dumps(stats), 200)
     resp.headers['Content-Type'] = 'application/json'
     return resp
+
+@app.endpoint('api.ready')
+def ready():
+    resp = make_response("ok", 200)
+    return resp
