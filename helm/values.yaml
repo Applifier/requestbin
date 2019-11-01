@@ -1,9 +1,7 @@
 namespace: ads
 productgroup: cpi-direct
 
-enableService: true
 enableDeployment: true
-
 deployment:
   image:
     repository: gcr.io/unity-ads-common-prd/requestbin
@@ -28,17 +26,26 @@ deployment:
   resources:
     requests:
       cpu: 1
-      memory: 100Mi
+      memory: 200Mi
     noLimits: true
 
   livenessProbe:
-    port: 8000
-    path: /
+    httpGet:
+      path: /
+      port: 8000
+      scheme: https
 
   readinessProbe:
-    port: 8000
-    path: /
+    httpGet:
+      path: /
+      port: 8000
+      scheme: https
 
+  ports:
+    - containerPort: 8000
+      protocol: TCP
+
+enableService: true
 service:
   type: ClusterIP
   ports:
