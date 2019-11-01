@@ -24,6 +24,6 @@ ADD requestbin  /opt/requestbin/requestbin/
 EXPOSE 8000
 
 WORKDIR /opt/requestbin
-CMD gunicorn -b 0.0.0.0:8000 --certfile cert.pem --keyfile key.pem --worker-class gevent --workers 4 --max-requests 1000 --timeout 60 --access-logfile - --error-logfile - requestbin:app
+CMD gunicorn -b 0.0.0.0:8000 --certfile cert.pem --keyfile key.pem --worker-class gevent --log-level debug --workers 4 --max-requests 1000 --timeout 120 --access-logfile - --error-logfile - requestbin:app
 
 

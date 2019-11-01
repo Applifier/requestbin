@@ -12,11 +12,6 @@ deployment:
   nodeSelector:
     kind: standard-pool
 
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "8000"
-    prometheus.io/path: "/metrics"
-
   tolerations:
     - key: "machine_type"
       operator: "Equal"
