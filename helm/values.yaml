@@ -63,4 +63,3 @@ ingress:
 enableBackendConfig: true
 backendConfig:
   securityPolicy: unity-internal
-
