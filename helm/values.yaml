@@ -13,7 +13,7 @@ deployment:
     - name: REALM
       value: prod
     - name: REDIS_HOST
-      value: requestbin-redis-master.service.consul
+      value: requestbin-redis-master.ads
     - name: REDIS_PORT
       value: '6379'
     - name: REDIS_DB
