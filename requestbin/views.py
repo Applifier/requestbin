@@ -1,3 +1,4 @@
+import sys
 import urllib
 from flask import session, redirect, url_for, escape, request, render_template, make_response
 
@@ -26,14 +27,22 @@ def expand_recent_bins():
             session.modified = True
     return recent
 
-@app.endpoint('views.home')
-def home():
+@app.before_first_request
+def create_static_bin():
+    print("before_first_request")
     try:
         db.lookup_bin("callback")
+        print("callback bin exists")
     except KeyError:
         db.create_bin(False, "callback")
         print("created callback bin")
         update_recent_bins("callback")
+        print("updated recent bins")
+    finally:
+        sys.stdout.flush()
+
+@app.endpoint('views.home')
+def home():
     return render_template('home.html', recent=expand_recent_bins())
 
 
@@ -41,7 +50,7 @@ def home():
 def bin(name):
     try:
         bin = db.lookup_bin(name)
-        print('GOT BIN {}'.format(bin))
+        #print('GOT BIN {}'.format(bin.__dict__))
     except KeyError:
         print("BIN NOT FOUND")
         return "Not found\n", 404
