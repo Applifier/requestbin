@@ -7,6 +7,8 @@ app:
         - redis
     ports:
         - "8000:8000"
+    volumes:
+        - "./requestbin:/opt/requestbin/requestbin"
 
 redis:
     image: redis

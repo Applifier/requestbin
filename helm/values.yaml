@@ -24,27 +24,43 @@ deployment:
       memory: 200Mi
     noLimits: true
 
+  ports:
+    - name: http
+      containerPort: 8000
+      protocol: TCP
+
   livenessProbe:
     httpGet:
       path: /ready
-      port: 8000
+      port: http
       scheme: HTTPS
 
   readinessProbe:
     httpGet:
       path: /ready
-      port: 8000
+      port: http
       scheme: HTTPS
-
-  ports:
-    - containerPort: 8000
-      protocol: TCP
 
 enableService: true
 service:
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: requestbin-https
       protocol: TCP
       port: 443
-      targetPort: 8000
+      targetPort: http
+
+enableIngress: true
+ingress:
+  host: requestbin.stg.mz.internal.unity3d.com
+  secretName: tls-stg-mz-internal-unity3d-com
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "requestbin-ingress"
+    kubernetes.io/ingress.allow-http: "false"
+  paths:
+    - '/*'
+
+enableBackendConfig: true
+backendConfig:
+  securityPolicy: unity-internal
+
