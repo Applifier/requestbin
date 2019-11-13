@@ -48,21 +48,21 @@ deployment:
     httpGet:
       path: /ready
       port: http
-      scheme: HTTPS
+      scheme: HTTP
 
   readinessProbe:
     httpGet:
       path: /ready
       port: http
-      scheme: HTTPS
+      scheme: HTTP
 
 enableService: true
 service:
   type: NodePort
   ports:
-    - name: requestbin-https
+    - name: requestbin-nodeport
       protocol: TCP
-      port: 443
+      port: 22222
       targetPort: http
 
 enableIngress: true
