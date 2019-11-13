@@ -1,1 +1,8 @@
 environment: stg
+
+deployment:
+  env:
+    - name: REALM
+      value: prod
+    - name: REDIS_URL
+      value: '//requestbin-redis-master.service.consul:6379'
