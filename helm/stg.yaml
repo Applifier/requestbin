@@ -1,18 +1,1 @@
 environment: stg
-
-enableVaultSecrets: true
-deployment:
-  env:
-    - name: REALM
-      value: prod
-    - name: REDIS_HOST
-      value: requestbin-redis-master.service.consul
-    - name: REDIS_PORT
-      value: '6379'
-    - name: REDIS_DB
-      value: '0'
-    - name: REDIS_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          name: requestbin-redis-password
-          key: redis-password
